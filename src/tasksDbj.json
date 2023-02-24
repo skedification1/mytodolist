@@ -1,0 +1,7 @@
+[
+  { "id": 1, "text": "Take money", "isDone": true, "mode": "add" },
+  { "id": 2, "text": "Read book", "isDone": false, "mode": "add" },
+  { "id": 3, "text": "make sport break", "isDone": true, "mode": "add" },
+  { "id": 4, "text": "Cocking great lunch", "isDone": false, "mode": "add" },
+  { "id": 5, "text": "show the action for kids", "isDone": true, "mode": "add" }
+]

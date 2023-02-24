@@ -1,38 +1,142 @@
+* {
+}
+
+.container {
+  /* background-color: #c4b3a3; */
+  background: #c4b3a3;
+  background: -webkit-radial-gradient(
+    circle farthest-side at center center,
+    #ed836e 0%,
+    #e32f21 100%
+  );
+  background: -moz-radial-gradient(circle farthest-side at center center, #ed836e 0%, #e32f21 100%);
+  background: radial-gradient(circle farthest-side at center center, #0a97f5 0%, #7e7267 100%);
+  position: relative;
+  max-width: 1200px;
+  /* height: 1500px; */
+  margin: 0 auto;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* min-height: 650px; */
+  min-height: 88.19vh;
+  padding: 21px 0 93px 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.todo_tasks {
+  margin-top: 20px;
+  padding: 20px 5px 20px 3px;
+  border-radius: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
+  min-height: 200px;
+  background-color: #c4b3a3;
+  border-radius: 25px;
+  -webkit-box-shadow: 8px 6px 26px -2px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: 8px 6px 26px -2px rgba(0, 0, 0, 0.18);
+  box-shadow: 8px 6px 26px -2px rgba(0, 0, 0, 0.18);
+}
+.todo_tasks_text {
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #d3d8db;
+  width: 350px;
+  overflow-wrap: break-word;
+  border-radius: 5px;
+}
+.todo_add h3 {
+  color: #0a97f5;
+}
+.todo_add {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  text-align: center;
+
+  width: 600px;
+  height: 100px;
+  background-color: #c4b3a3;
+  border-radius: 25px;
+  box-shadow: 8px 6px 26px -2px rgba(0, 0, 0, 0.18);
+}
+.input-add {
+}
+.input_add {
+  margin-right: 90px;
+  height: 20px;
+  width: 300px;
+  text-align: left;
+  background-color: white;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  color: #0a97f5;
+}
+.input_add input {
+  background-color: #c4b3a3;
+  width: 300px;
+}
+.btn_add {
+  /* display: block; */
+  /* justify-content: space-between; */
+  /* margin: auto; */
+  background-color: #0a97f5;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  min-height: 24px;
+  min-width: 100px;
+  height: 24px;
+  width: 100px;
+}
+.btn_add:hover,
+.btn_added:hover {
+  box-shadow: 5px 3px 10px -2px rgba(0, 0, 0, 0.7);
+}
+.btn_add:active,
+.btn_added:active {
+  box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6) inset;
 }
 
-.App-link {
-  color: #61dafb;
+.btn_added {
+  margin: auto;
+  background-color: #15659b;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  min-height: 24px;
+  min-width: 100px;
+}
+.todo_tasks_item {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.wrapper_btn {
+  display: flex;
+  width: 205px;
+  justify-content: space-between;
+}
+.checker {
+  width: 16px;
+}
+.todo_task_complete {
+  color: green;
+  font-weight: bold;
+  background-color: white;
+  background: rgba(0, 0, 0, 0.15); /* Прозрачность */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* width: 50%; Для ширины на весь экран нужно прописать 100% */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn_del {
 }
