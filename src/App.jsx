@@ -19,16 +19,12 @@ function App() {
   const [tasks, setTasks] = React.useState([]);
 
   function atest() {
-    axios
-      .post('https://63427c853f83935a7843d23c.mockapi.io/todo', {
-        id: 5,
-        text: 'show the action_________-111add for kids',
-        isDone: true,
-        mode: 'add',
-      })
-      .then((res) => {
-        setTasks(res.data);
-      });
+    axios.put('https://63427c853f83935a7843d23c.mockapi.io/todo/8', {
+      text: '________2_________new___________________new',
+    });
+    // .then((res) => {
+    //   setTasks(res.data);
+    // });
   }
 
   useEffect(() => {
@@ -37,9 +33,8 @@ function App() {
       setTasks(res.data);
     });
 
-    console.log(tasks, 'its data Effect_1');
+    //atest();
   }, []);
-  console.log(tasks, 'its data Effect2');
 
   // const testingF = () => {
   //   const onFetch = async () => {
@@ -77,9 +72,14 @@ function App() {
   }
 
   function toggleTask(item, cls) {
+    let layerToggle = !item.isDone;
     setTasks((item.isDone = !item.isDone));
 
-    console.log(item.isDone, '_______toggle task');
+    axios.put(`https://63427c853f83935a7843d23c.mockapi.io/todo/${item.id}`, {
+      isDone: layerToggle,
+    });
+
+    console.log(item.isDone, '___toggle_task');
     return setTasks([...tasks]);
   }
 
@@ -94,21 +94,37 @@ function App() {
   const [btnLocker, setBtnLocker] = React.useState(0);
   function editTask(item, btnLocker) {
     if ((item.mode === 'add') & (btnLocker === 0)) {
-      // console.log('ADD___', btnLocker);
+      //   console.log('ADD___was', btnLocker);
       setBtnLocker((btnLocker += 1));
-      // console.log('ADD___', btnLocker);
+      // console.log('ADD___ NOW', btnLocker);
 
       setTasks((item.mode = 'edit'));
+      //   console.log('Item.mode_ADD = ', item.mode);
     } else if ((item.mode === 'edit') & (btnLocker === 1)) {
       const newText = inputEditTextRef.current.value;
-      setTasks((tasks[item.id - 1].text = newText));
 
-      // console.log('EDIT___', btnLocker);
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].id != item.id) {
+          console.log('...not item.id ', tasks[i].id);
+        } else {
+          console.log(`Item_id- ${item.id} find I-moc its__`, i);
+          setTasks((tasks[i].text = newText));
+
+          break;
+        }
+      }
+      axios.put(`https://63427c853f83935a7843d23c.mockapi.io/todo/${item.id}`, {
+        text: newText,
+      });
+      //  setTasks((tasks[fId].text = newText)); /// v1
+
+      //   console.log('EDIT___was', btnLocker);
       setBtnLocker((btnLocker = 0));
-      // console.log('EDIT___', btnLocker);
+      // console.log('EDIT___NOW', btnLocker);
 
       //  setTasks((item.text = newText));
       setTasks((item.mode = 'add'));
+      console.log('Item.mode_EDIT = ', item.mode);
     }
 
     return setTasks([...tasks]);
@@ -129,12 +145,14 @@ function App() {
   function addTaskV2(title) {
     const newText = title;
     const obj = {
-      id: tasks[tasks.length - 1].id + 1,
+      id: Number(tasks[tasks.length - 1].id) + 1,
       // text: `${newText} ${tasks[tasks.length - 1].id + 1}`,
       text: `${newText} `,
       isDone: false,
       mode: 'add',
     };
+
+    console.log('ADD___ID', obj.id);
 
     axios.post('https://63427c853f83935a7843d23c.mockapi.io/todo', obj);
     setTasks((prev) => [...prev, obj]);

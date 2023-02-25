@@ -49,7 +49,7 @@ const Todolist = (props) => {
 
         <div className="todo_tasks">
           {props.tasks.map((item) => {
-            console.log(item.mode);
+            console.log(item.mode, '_todolist');
             if (item.mode === 'edit') {
               const editT = () => {
                 props.editTask(item, props.btnLocker);
@@ -77,6 +77,7 @@ const Todolist = (props) => {
               );
             } else {
               ////////////////////////////////////////////////////////////////////////////////////////////
+
               const toggleT = () => {
                 props.toggleTask(item);
               };
