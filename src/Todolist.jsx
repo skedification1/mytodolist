@@ -1,6 +1,8 @@
 import React from 'react';
 import { createRef } from 'react';
-import EditPanel from './components/EditPanel';
+import ClockTime from './components/ClockTime';
+import CryptoPrice from './components/CryptoPrice';
+//import ClockTime from '../src/components/ClockTime';
 
 const Todolist = (props) => {
   const [newTaskTitle, setNewTaskTitle] = React.useState('');
@@ -22,12 +24,27 @@ const Todolist = (props) => {
     }
   };
 
+  const onAllClickFilter = () => {
+    console.log(props.classFilterToggle, 'alll tasksclaass');
+    props.changeFilter('all');
+    props.setClassFilterToggle((props.classFilterToggle[0] = +1));
+    console.log(props.classFilterToggle, 'alll tasksclaass___2');
+  };
+  const onActiveClickFilter = () => {
+    props.changeFilter('active');
+  };
+
+  const onCompletedFilter = () => {
+    props.changeFilter('completed');
+  };
+
   return (
     <div className="container">
       <div className="App">
+        <CryptoPrice />
         <div className="todo_add">
+          <ClockTime />
           <h3>TO-DO-LIST</h3>
-
           <div className="input-add">
             <input
               className="input_add"
@@ -45,11 +62,28 @@ const Todolist = (props) => {
               ADD
             </button>
           </div>
+          <div className="todo_filter">
+            <button
+              className={props.filterr === 'all' ? 'btn_added' : 'btn_add'}
+              onClick={onAllClickFilter}>
+              all
+            </button>
+            <button
+              className={props.filterr === 'active' ? 'btn_added' : 'btn_add'}
+              onClick={onActiveClickFilter}>
+              active
+            </button>
+            <button
+              className={props.filterr === 'completed' ? 'btn_added' : 'btn_add'}
+              onClick={onCompletedFilter}>
+              completed
+            </button>
+          </div>
         </div>
 
         <div className="todo_tasks">
           {props.tasks.map((item) => {
-            console.log(item.mode, '_todolist');
+            console.log(item.mode, '_todolist_item.mode');
             if (item.mode === 'edit') {
               const editT = () => {
                 props.editTask(item, props.btnLocker);
@@ -57,6 +91,7 @@ const Todolist = (props) => {
               const removeT = () => {
                 props.removeTasks(item.id);
               };
+
               return (
                 <div className="todo_tasks_item">
                   <input

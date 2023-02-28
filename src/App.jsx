@@ -2,6 +2,9 @@ import logo from './logo.svg';
 import React, { useEffect } from 'react';
 import './App.css';
 import Todolist from './Todolist';
+
+import ClockTime from './components/ClockTime';
+import CryptoPrice from './components/CryptoPrice';
 import { useState, createRef } from 'react';
 import tasksDbj from './tasksDbj.json';
 import axios from 'axios';
@@ -17,6 +20,7 @@ function App() {
     { id: 5, text: 'show the action for kids', isDone: true, mode: 'add' },
   ];
   const [tasks, setTasks] = React.useState([]);
+  const [filter, setFilter] = React.useState('all');
 
   function atest() {
     axios.put('https://63427c853f83935a7843d23c.mockapi.io/todo/8', {
@@ -162,10 +166,22 @@ function App() {
     // setTasks(newTasks);
   }
 
+  function changeFilter(value) {
+    setFilter(value);
+  }
+
+  let tasksForTodolist = tasks;
+  if (filter === 'completed') {
+    tasksForTodolist = tasks.filter((t) => t.isDone === true);
+  }
+  if (filter === 'active') {
+    tasksForTodolist = tasks.filter((t) => t.isDone === false);
+  }
+
   return (
     <>
       <Todolist
-        tasks={tasks}
+        tasks={tasksForTodolist}
         removeTasks={removeTasks}
         //  addTask={addTask}
         toggleTask={toggleTask}
@@ -176,6 +192,9 @@ function App() {
         btnLocker={btnLocker}
         //  checkTask={checkTask}
         addTaskV2={addTaskV2}
+        changeFilter={changeFilter}
+        /////////////////////////////////
+        filterr={filter}
       />
     </>
   );
