@@ -3,8 +3,6 @@ import React, { useEffect } from 'react';
 import './App.css';
 import Todolist from './Todolist';
 
-import ClockTime from './components/ClockTime';
-import CryptoPrice from './components/CryptoPrice';
 import { useState, createRef } from 'react';
 import tasksDbj from './tasksDbj.json';
 import axios from 'axios';
@@ -21,6 +19,9 @@ function App() {
   ];
   const [tasks, setTasks] = React.useState([]);
   const [filter, setFilter] = React.useState('all');
+  const [paginationPage, setPaginationPage] = React.useState(1);
+
+  const [pagCount, setPagCount] = React.useState(3);
 
   function atest() {
     axios.put('https://63427c853f83935a7843d23c.mockapi.io/todo/8', {
@@ -32,13 +33,45 @@ function App() {
   }
 
   useEffect(() => {
-    axios.get('https://63427c853f83935a7843d23c.mockapi.io/todo').then((res) => {
+    let urlForCountFilterPagination = '';
+    if (filter === 'all') {
+      urlForCountFilterPagination = 'https://63427c853f83935a7843d23c.mockapi.io/todo';
+    } else if (filter === 'active') {
+      urlForCountFilterPagination = 'https://63427c853f83935a7843d23c.mockapi.io/todo?isDone=false';
+    } else if (filter === 'completed') {
+      urlForCountFilterPagination = 'https://63427c853f83935a7843d23c.mockapi.io/todo?isDone=true';
+    }
+
+    axios.get(urlForCountFilterPagination).then((res) => {
       //  setData(res.data);
-      setTasks(res.data);
+      setPagCount(res.data.length);
     });
 
-    //atest();
-  }, []);
+    if (filter === 'all') {
+      axios
+        .get(`https://63427c853f83935a7843d23c.mockapi.io/todo?&page=${paginationPage}&limit=10`)
+        .then((res) => {
+          setTasks(res.data);
+        });
+    } else if (filter === 'active') {
+      axios
+        .get(
+          `https://63427c853f83935a7843d23c.mockapi.io/todo?isDone=false?&page=${paginationPage}&limit=10`,
+        )
+        .then((res) => {
+          setTasks(res.data);
+        });
+    } else if (filter === 'completed') {
+      axios
+        .get(
+          `https://63427c853f83935a7843d23c.mockapi.io/todo?isDone=true?&page=${paginationPage}&limit=10`,
+        )
+        .then((res) => {
+          setTasks(res.data);
+        });
+    }
+    //atest()
+  }, [paginationPage, filter]);
 
   // const testingF = () => {
   //   const onFetch = async () => {
@@ -159,11 +192,8 @@ function App() {
     console.log('ADD___ID', obj.id);
 
     axios.post('https://63427c853f83935a7843d23c.mockapi.io/todo', obj);
-    setTasks((prev) => [...prev, obj]);
 
-    //////////v1.2
-    // let newTasks = [...tasks, obj];
-    // setTasks(newTasks);
+    setTasks((prev) => [...prev, obj]);
   }
 
   function changeFilter(value) {
@@ -183,7 +213,6 @@ function App() {
       <Todolist
         tasks={tasksForTodolist}
         removeTasks={removeTasks}
-        //  addTask={addTask}
         toggleTask={toggleTask}
         //  onInputt={onInputt}
         inputTextRef={inputTextRef}
@@ -195,6 +224,9 @@ function App() {
         changeFilter={changeFilter}
         /////////////////////////////////
         filterr={filter}
+        paginationPage={paginationPage}
+        setPaginationPage={setPaginationPage}
+        pagCount={pagCount}
       />
     </>
   );

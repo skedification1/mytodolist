@@ -4,7 +4,7 @@ const CryptoPrice = () => {
   const [btc, setBtc] = React.useState('btc_price');
   const [eth, setEth] = React.useState('eth_price');
   const [dot, setDot] = React.useState('dot_price');
-  const [moonbeam, setMoonbeam] = React.useState('glmr_prive');
+  const [moonbeam, setMoonbeam] = React.useState('glmr_priсe');
   //const API_KEY = 'd61e0ac1-b47e-4d21-b133-ed47a6b49f97';
   // const endpointCoinmarket = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=BTC&convert=USD&CMC_PRO_API_KEY=${API_KEY}`;
 

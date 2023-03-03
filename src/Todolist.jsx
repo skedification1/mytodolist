@@ -2,6 +2,7 @@ import React from 'react';
 import { createRef } from 'react';
 import ClockTime from './components/ClockTime';
 import CryptoPrice from './components/CryptoPrice';
+import Pagination from './components/Pagination';
 //import ClockTime from '../src/components/ClockTime';
 
 const Todolist = (props) => {
@@ -58,7 +59,7 @@ const Todolist = (props) => {
               // defaultValue="Task - "
               // ref={props.inputTextRef}
             />
-            <button className="btn_add" onClick={addTaskHere}>
+            <button className="task_added btn_add" onClick={addTaskHere}>
               ADD
             </button>
           </div>
@@ -138,7 +139,7 @@ const Todolist = (props) => {
                     <button className="btn_add" onClick={editTT}>
                       Fix text
                     </button>
-                    <button className="btn_add btn_del" onClick={removeTT}>
+                    <button className="task_deleted btn_add btn_del" onClick={removeTT}>
                       Delete
                     </button>
                   </div>
@@ -147,6 +148,12 @@ const Todolist = (props) => {
             }
           })}
         </div>
+        <Pagination
+          paginationPage={props.paginationPage}
+          setPaginationPage={props.setPaginationPage}
+          //tasks={props.tasks}
+          pagCount={props.pagCount}
+        />
       </div>
     </div>
   );
