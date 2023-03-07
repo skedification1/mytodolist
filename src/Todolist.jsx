@@ -3,7 +3,7 @@ import { createRef } from 'react';
 import ClockTime from './components/ClockTime';
 import CryptoPrice from './components/CryptoPrice';
 import Pagination from './components/Pagination';
-//import ClockTime from '../src/components/ClockTime';
+import PopupTaskAded from './components/PopupTaskAded';
 
 const Todolist = (props) => {
   const [newTaskTitle, setNewTaskTitle] = React.useState('');
@@ -28,15 +28,18 @@ const Todolist = (props) => {
   const onAllClickFilter = () => {
     console.log(props.classFilterToggle, 'alll tasksclaass');
     props.changeFilter('all');
-    props.setClassFilterToggle((props.classFilterToggle[0] = +1));
+    // props.setClassFilterToggle((props.classFilterToggle[0] = +1));
     console.log(props.classFilterToggle, 'alll tasksclaass___2');
+    props.setPaginationPage(1);
   };
   const onActiveClickFilter = () => {
     props.changeFilter('active');
+    props.setPaginationPage(1);
   };
 
   const onCompletedFilter = () => {
     props.changeFilter('completed');
+    props.setPaginationPage(1);
   };
 
   return (
@@ -59,7 +62,7 @@ const Todolist = (props) => {
               // defaultValue="Task - "
               // ref={props.inputTextRef}
             />
-            <button className="task_added btn_add" onClick={addTaskHere}>
+            <button className="btn_add" onClick={addTaskHere}>
               ADD
             </button>
           </div>
@@ -92,6 +95,12 @@ const Todolist = (props) => {
               const removeT = () => {
                 props.removeTasks(item.id);
               };
+              const onKeyPressHandlerEdit = (e) => {
+                if (e.key === 'Enter') {
+                  console.log('KEEEYYYY');
+                  editT();
+                }
+              };
 
               return (
                 <div className="todo_tasks_item">
@@ -100,6 +109,7 @@ const Todolist = (props) => {
                     type="text"
                     defaultValue={item.text}
                     ref={props.inputEditTextRef}
+                    onKeyDown={onKeyPressHandlerEdit}
                   />
                   <div className="wrapper_btn">
                     <button className="btn_added" onClick={editT}>
@@ -139,7 +149,7 @@ const Todolist = (props) => {
                     <button className="btn_add" onClick={editTT}>
                       Fix text
                     </button>
-                    <button className="task_deleted btn_add btn_del" onClick={removeTT}>
+                    <button className=" btn_add btn_del" onClick={removeTT}>
                       Delete
                     </button>
                   </div>
@@ -155,6 +165,11 @@ const Todolist = (props) => {
           pagCount={props.pagCount}
         />
       </div>
+      <PopupTaskAded
+        popupClass={props.popupClass}
+        setPopupClass={props.setPopupClass}
+        popupText={props.popupText}
+      />
     </div>
   );
 };

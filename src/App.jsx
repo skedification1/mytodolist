@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import React, { useEffect } from 'react';
-import './App.css';
+import './App.scss';
 import Todolist from './Todolist';
 
 import { useState, createRef } from 'react';
@@ -22,6 +22,8 @@ function App() {
   const [paginationPage, setPaginationPage] = React.useState(1);
 
   const [pagCount, setPagCount] = React.useState(3);
+  const [popupClass, setPopupClass] = React.useState('init');
+  const [popupText, setPopupText] = React.useState('');
 
   function atest() {
     axios.put('https://63427c853f83935a7843d23c.mockapi.io/todo/8', {
@@ -99,6 +101,13 @@ function App() {
     console.log(filtredTasks);
   }
 
+  function setPopup(poputText) {
+    setPopupText(poputText);
+    if (popupClass !== 'popup_active') {
+      setPopupClass('popup_active');
+    } else if (popupClass === 'popup_active') setPopupClass('restart');
+  }
+
   function removeTasks(id) {
     let filtredTasks = tasks.filter((item) => item.id !== id);
     setTasks(filtredTasks);
@@ -106,6 +115,7 @@ function App() {
 
     axios.delete(`https://63427c853f83935a7843d23c.mockapi.io/todo/${id}`);
     // setTasks((prev) => [...prev, obj]);
+    setPopup('Task Deleted');
   }
 
   function toggleTask(item, cls) {
@@ -136,7 +146,6 @@ function App() {
       // console.log('ADD___ NOW', btnLocker);
 
       setTasks((item.mode = 'edit'));
-      //   console.log('Item.mode_ADD = ', item.mode);
     } else if ((item.mode === 'edit') & (btnLocker === 1)) {
       const newText = inputEditTextRef.current.value;
 
@@ -153,7 +162,6 @@ function App() {
       axios.put(`https://63427c853f83935a7843d23c.mockapi.io/todo/${item.id}`, {
         text: newText,
       });
-      //  setTasks((tasks[fId].text = newText)); /// v1
 
       //   console.log('EDIT___was', btnLocker);
       setBtnLocker((btnLocker = 0));
@@ -162,6 +170,7 @@ function App() {
       //  setTasks((item.text = newText));
       setTasks((item.mode = 'add'));
       console.log('Item.mode_EDIT = ', item.mode);
+      setPopup('Task Saved');
     }
 
     return setTasks([...tasks]);
@@ -194,10 +203,12 @@ function App() {
     axios.post('https://63427c853f83935a7843d23c.mockapi.io/todo', obj);
 
     setTasks((prev) => [...prev, obj]);
+    setPopup('Task Aded');
   }
 
   function changeFilter(value) {
     setFilter(value);
+    setPopup(`Filter ${value}`);
   }
 
   let tasksForTodolist = tasks;
@@ -227,6 +238,10 @@ function App() {
         paginationPage={paginationPage}
         setPaginationPage={setPaginationPage}
         pagCount={pagCount}
+        ////////popup
+        popupClass={popupClass}
+        setPopupClass={setPopupClass}
+        popupText={popupText}
       />
     </>
   );
