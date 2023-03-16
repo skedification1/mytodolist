@@ -44,6 +44,9 @@ const CryptoPrice = () => {
     try {
       const response = await fetch(
         'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
+        // {
+        //   mode: 'no-cors',
+        // },
       ); // coindesk
 
       if (!response.ok) {
@@ -65,6 +68,9 @@ const CryptoPrice = () => {
     try {
       const response = await fetch(
         'https://api.coingecko.com/api/v3/simple/price?ids=polkadot&vs_currencies=usd',
+        // {
+        //   mode: 'no-cors',
+        // },
       ); // coindesk
 
       if (!response.ok) {
@@ -86,6 +92,9 @@ const CryptoPrice = () => {
     try {
       const response = await fetch(
         'https://api.coingecko.com/api/v3/simple/price?ids=moonbeam&vs_currencies=usd',
+        // {
+        //   mode: 'no-cors',
+        // },
       ); // coindesk
 
       if (!response.ok) {

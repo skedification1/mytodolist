@@ -1,40 +1,41 @@
-import logo from './logo.svg';
 import React, { useEffect } from 'react';
 import './App.scss';
 import Todolist from './Todolist';
+import CryptoPrice from './components/CryptoPrice';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPopups } from './redux/slices/popupSlice';
 
-import { useState, createRef } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  BrowserRouter,
+  Routes,
+  NavLink,
+} from 'react-router-dom';
+
 import tasksDbj from './tasksDbj.json';
 import axios from 'axios';
+// let tasksDb = [
+//   { id: 1, text: 'Take money', isDone: true, mode: 'add' },
+//   { id: 2, text: 'Read book', isDone: false, mode: 'add' },
+//   { id: 3, text: 'make sport break', isDone: true, mode: 'add' },
+//   { id: 4, text: 'Cocking great lunch', isDone: false, mode: 'add' },
+//   { id: 5, text: 'show the action for kids', isDone: true, mode: 'add' },
+// ];
 
 function App() {
-  const [data, setData] = React.useState([]);
+  const filter = useSelector((state) => state.reduxtest.filter);
+  const dispatch = useDispatch();
 
-  let tasksDb = [
-    { id: 1, text: 'Take money', isDone: true, mode: 'add' },
-    { id: 2, text: 'Read book', isDone: false, mode: 'add' },
-    { id: 3, text: 'make sport break', isDone: true, mode: 'add' },
-    { id: 4, text: 'Cocking great lunch', isDone: false, mode: 'add' },
-    { id: 5, text: 'show the action for kids', isDone: true, mode: 'add' },
-  ];
   const [tasks, setTasks] = React.useState([]);
-  const [filter, setFilter] = React.useState('all');
   const [paginationPage, setPaginationPage] = React.useState(1);
-
   const [pagCount, setPagCount] = React.useState(3);
   const [popupClass, setPopupClass] = React.useState('init');
-  const [popupText, setPopupText] = React.useState('');
-
-  function atest() {
-    axios.put('https://63427c853f83935a7843d23c.mockapi.io/todo/8', {
-      text: '________2_________new___________________new',
-    });
-    // .then((res) => {
-    //   setTasks(res.data);
-    // });
-  }
+  const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     let urlForCountFilterPagination = '';
     if (filter === 'all') {
       urlForCountFilterPagination = 'https://63427c853f83935a7843d23c.mockapi.io/todo';
@@ -45,7 +46,6 @@ function App() {
     }
 
     axios.get(urlForCountFilterPagination).then((res) => {
-      //  setData(res.data);
       setPagCount(res.data.length);
     });
 
@@ -54,6 +54,7 @@ function App() {
         .get(`https://63427c853f83935a7843d23c.mockapi.io/todo?&page=${paginationPage}&limit=10`)
         .then((res) => {
           setTasks(res.data);
+          setIsLoading(false);
         });
     } else if (filter === 'active') {
       axios
@@ -62,6 +63,7 @@ function App() {
         )
         .then((res) => {
           setTasks(res.data);
+          setIsLoading(false);
         });
     } else if (filter === 'completed') {
       axios
@@ -70,9 +72,9 @@ function App() {
         )
         .then((res) => {
           setTasks(res.data);
+          setIsLoading(false);
         });
     }
-    //atest()
   }, [paginationPage, filter]);
 
   // const testingF = () => {
@@ -95,14 +97,14 @@ function App() {
   //   // return <div className="App">{onMap()}</div>;
   // };
 
-  function removeTasksOLLLLLDDDDDD(id) {
-    let filtredTasks = tasks.filter((item) => item.id !== id);
-    setTasks(filtredTasks);
-    console.log(filtredTasks);
-  }
+  // function removeTasksOLLLLLDDDDDD(id) {
+  //   let filtredTasks = tasks.filter((item) => item.id !== id);
+  //   setTasks(filtredTasks);
+  //   console.log(filtredTasks);
+  // }
 
   function setPopup(poputText) {
-    setPopupText(poputText);
+    dispatch(setPopups(poputText));
     if (popupClass !== 'popup_active') {
       setPopupClass('popup_active');
     } else if (popupClass === 'popup_active') setPopupClass('restart');
@@ -133,17 +135,15 @@ function App() {
   let inputTextRef = React.createRef();
   let inputEditTextRef = React.createRef();
 
-  const onInputt = () => {
-    let messaga = inputTextRef.current.value;
-    console.log(messaga);
-  };
+  // const onInputt = () => {
+  //   let messaga = inputTextRef.current.value;
+  //   console.log(messaga);
+  // };
 
   const [btnLocker, setBtnLocker] = React.useState(0);
   function editTask(item, btnLocker) {
     if ((item.mode === 'add') & (btnLocker === 0)) {
-      //   console.log('ADD___was', btnLocker);
       setBtnLocker((btnLocker += 1));
-      // console.log('ADD___ NOW', btnLocker);
 
       setTasks((item.mode = 'edit'));
     } else if ((item.mode === 'edit') & (btnLocker === 1)) {
@@ -163,11 +163,8 @@ function App() {
         text: newText,
       });
 
-      //   console.log('EDIT___was', btnLocker);
       setBtnLocker((btnLocker = 0));
-      // console.log('EDIT___NOW', btnLocker);
 
-      //  setTasks((item.text = newText));
       setTasks((item.mode = 'add'));
       console.log('Item.mode_EDIT = ', item.mode);
       setPopup('Task Saved');
@@ -206,11 +203,6 @@ function App() {
     setPopup('Task Aded');
   }
 
-  function changeFilter(value) {
-    setFilter(value);
-    setPopup(`Filter ${value}`);
-  }
-
   let tasksForTodolist = tasks;
   if (filter === 'completed') {
     tasksForTodolist = tasks.filter((t) => t.isDone === true);
@@ -221,28 +213,38 @@ function App() {
 
   return (
     <>
-      <Todolist
-        tasks={tasksForTodolist}
-        removeTasks={removeTasks}
-        toggleTask={toggleTask}
-        //  onInputt={onInputt}
-        inputTextRef={inputTextRef}
-        editTask={editTask}
-        inputEditTextRef={inputEditTextRef}
-        btnLocker={btnLocker}
-        //  checkTask={checkTask}
-        addTaskV2={addTaskV2}
-        changeFilter={changeFilter}
-        /////////////////////////////////
-        filterr={filter}
-        paginationPage={paginationPage}
-        setPaginationPage={setPaginationPage}
-        pagCount={pagCount}
-        ////////popup
-        popupClass={popupClass}
-        setPopupClass={setPopupClass}
-        popupText={popupText}
-      />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/crypto" element={<CryptoPrice />} />
+          <Route path="filter-dadasdasd" element={<Todolist />} />
+          <Route
+            path="/*"
+            element={
+              <>
+                <Todolist
+                  isLoading={isLoading}
+                  tasks={tasksForTodolist}
+                  removeTasks={removeTasks}
+                  toggleTask={toggleTask}
+                  inputTextRef={inputTextRef}
+                  editTask={editTask}
+                  inputEditTextRef={inputEditTextRef}
+                  btnLocker={btnLocker}
+                  addTaskV2={addTaskV2}
+                  setPopup={setPopup}
+                  /////////////////////////////////pagination
+                  paginationPage={paginationPage}
+                  setPaginationPage={setPaginationPage}
+                  pagCount={pagCount}
+                  ////////popup
+                  popupClass={popupClass}
+                  setPopupClass={setPopupClass}
+                />
+              </>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
