@@ -8,13 +8,13 @@ import Skeleton from './components/Skeleton';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPopups } from './redux/slices/popupSlice';
 import { setFilterActive, setFilterCompleted, setFilterAll } from './redux/slices/filterSlice';
-
 import { useLocation } from 'react-router-dom';
 
 import { BrowserRouter as Router, Link, NavLink } from 'react-router-dom';
 
 const Todolist = (props) => {
   const filter = useSelector((state) => state.reduxtest.filter);
+  const theme = useSelector((state) => state.reduxtheme.theme);
   const dispatch = useDispatch();
 
   const location = useLocation();
@@ -74,10 +74,10 @@ const Todolist = (props) => {
 
   return (
     <>
-      <div className="container">
+      <div className={theme ? 'container active' : 'container'}>
         <div className="App">
           <CryptoPrice />
-          <div className="todo_add">
+          <div className={theme ? 'todo_add active' : 'todo_add'}>
             <ClockTime />
             <h3>TO-DO-LIST</h3>
             <div className="input-add">
@@ -123,7 +123,7 @@ const Todolist = (props) => {
             </div>
           </div>
 
-          <div className="todo_tasks">
+          <div className={theme ? 'todo_tasks active' : 'todo_tasks'}>
             {props.isLoading
               ? [...new Array(10)].map((_, index) => {
                   return <Skeleton key={index} />;

@@ -1,5 +1,7 @@
 * {
   font-family: 'Shantell Sans', cursive;
+  // margin: 0;
+  // padding: 0;
 }
 html {
   /* font-family: Verdana, Tahoma, sans-serif; */
@@ -16,10 +18,20 @@ html {
   );
   background: -moz-radial-gradient(circle farthest-side at center center, #ed836e 0%, #e32f21 100%);
   background: radial-gradient(circle farthest-side at center center, #0a97f5 0%, #7e7267 100%);
+
   position: relative;
   max-width: 1400px;
   /* height: 1500px; */
   margin: 0 auto;
+}
+
+//theme
+.container.active {
+  min-height: 100vh;
+  background: url('../src/img/bcg.png') no-repeat;
+  background-size: cover;
+  background-position: center;
+  max-width: 100%;
 }
 
 .App {
@@ -30,12 +42,28 @@ html {
   margin-left: auto;
   margin-right: auto;
   .clockT {
+    display: flex;
+    justify-content: space-between;
     position: absolute;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-left: 10px;
     color: #15659b;
     font-weight: bold;
     font-size: 16px;
+    width: 180px;
+    .btn_change {
+      width: 40%;
+      margin: auto;
+      background-color: #0a97f5;
+      outline: none;
+      border: 1px solid black;
+      border-radius: 5px;
+      min-height: 24px;
+
+      height: 24px;
+
+      font-weight: 500;
+    }
   }
   .todo_add {
     position: relative;
@@ -67,6 +95,12 @@ html {
       justify-content: space-between;
     }
   }
+  .todo_add.active {
+    //Theme
+    background: transparent;
+    backdrop-filter: blur(7px);
+    border: 1px solid #fff;
+  }
   .todo_tasks {
     margin-top: 20px;
     padding: 20px 5px 20px 3px;
@@ -76,7 +110,8 @@ html {
     width: 600px;
     min-height: 200px;
     background-color: #c4b3a3;
-    -webkit-box-shadow: 8px 6px 26px -2px rgba(0, 0, 0, 0.18);
+
+    -webkit-box-shadow: 8px 6px 26px -2px rgba(231, 34, 34, 0.18);
     /* -moz-box-shadow: 8px 6px 26px -2px rgba(0, 0, 0, 0.18); */
     box-shadow: 8px 6px 26px -2px rgba(0, 0, 0, 0.18);
     &_text {
@@ -111,6 +146,12 @@ html {
       /* width: 50%; Для ширины на весь экран нужно прописать 100% */
     }
   }
+  //theme
+  .todo_tasks.active {
+    background: transparent;
+    backdrop-filter: blur(7px);
+    border: 1px solid #fff;
+  }
 }
 
 .input_add {
@@ -144,11 +185,13 @@ html {
   font-weight: 500;
 }
 .btn_add:hover,
-.btn_added:hover {
+.btn_added:hover,
+.btn_change:hover {
   box-shadow: 5px 3px 10px -2px rgba(0, 0, 0, 0.7);
 }
 .btn_add:active,
-.btn_added:active {
+.btn_added:active,
+.btn_change:active {
   box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6) inset;
 }
 
@@ -208,6 +251,12 @@ html {
     font-size: 22px;
   }
 }
+//theme
+.layer_bg.active {
+  background: transparent;
+  backdrop-filter: blur(7px);
+  border: 1px solid #fff;
+}
 
 .pagination {
   padding-top: 15px;
@@ -232,7 +281,22 @@ html {
   .pagination_numb_added {
     background-color: #d3d8db;
   }
+
+  //theme
+  .pagination_left.active,
+  .pagination_right.active {
+    background: transparent;
+    backdrop-filter: blur(7px);
+    border: 1px solid #fff;
+    color: #fff;
+  }
+  .pagination_numb_added.active {
+    // background: transparent;
+    color: #000;
+    background-color: #d3d8db;
+  }
 }
+
 .pagination_numb {
   display: inline-flex;
   margin-right: 5px;
@@ -251,6 +315,13 @@ html {
   &:active {
     box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.6) inset;
   }
+}
+//theme
+.pagination_numb.active {
+  background: transparent;
+  backdrop-filter: blur(7px);
+  border: 1px solid #fff;
+  color: #fff;
 }
 
 @keyframes popup_animation {
@@ -291,6 +362,12 @@ html {
   /* animation-name: popup_animation;
   animation-duration: 4s; */
   z-index: 9;
+}
+.popup.active {
+  background: transparent;
+  backdrop-filter: blur(7px);
+  border: 1px solid #fff;
+  // color: #fff;
 }
 
 .popup_active {

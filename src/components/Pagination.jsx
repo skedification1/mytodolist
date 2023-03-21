@@ -1,6 +1,9 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Pagination = ({ paginationPage, setPaginationPage, pagCount }) => {
+  const theme = useSelector((state) => state.reduxtheme.theme);
+
   const pgCount = Math.ceil(pagCount / 10); // todo active completed
   // const pgCount = 1;
   let pagsNumbers = [];
@@ -24,7 +27,13 @@ const Pagination = ({ paginationPage, setPaginationPage, pagCount }) => {
     for (let i = 1; i <= pgCount; i++) {
       pagsNumbers.push(
         <div
-          className={`pagination_numb ${paginationPage === i ? 'pagination_numb_added' : null}`}
+          // className={`pagination_numb ${paginationPage === i ? 'pagination_numb_added' : null}`}
+
+          className={
+            theme
+              ? `pagination_numb active ${paginationPage === i ? 'pagination_numb_added ' : null}`
+              : `pagination_numb ${paginationPage === i ? 'pagination_numb_added ' : null}`
+          }
           onClick={() => {
             PaginSelectPage(i);
           }}>
@@ -37,12 +46,20 @@ const Pagination = ({ paginationPage, setPaginationPage, pagCount }) => {
 
   return (
     <div className="pagination">
-      <div className="pagination_numb pagination_left" onClick={PaginSelectMinus}>
+      <div
+        className={
+          theme ? 'pagination_numb pagination_left active' : 'pagination_numb pagination_left'
+        }
+        onClick={PaginSelectMinus}>
         {'<'}
       </div>
       {pagRender()}
 
-      <div className="pagination_numb pagination_right" onClick={PaginSelectPlus}>
+      <div
+        className={
+          theme ? 'pagination_numb pagination_right active' : 'pagination_numb pagination_right'
+        }
+        onClick={PaginSelectPlus}>
         {'>'}
       </div>
     </div>

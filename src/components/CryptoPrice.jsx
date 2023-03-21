@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 const CryptoPrice = () => {
+  const theme = useSelector((state) => state.reduxtheme.theme);
   const [btc, setBtc] = React.useState('btc_price');
   const [eth, setEth] = React.useState('eth_price');
   const [dot, setDot] = React.useState('dot_price');
@@ -113,7 +115,7 @@ const CryptoPrice = () => {
   }
 
   return (
-    <div className="layer_bg">
+    <div className={theme ? 'layer_bg active' : 'layer_bg'}>
       <div className="btc_price">BTC - ${btc}</div>
       <div className="eth_price">ETH - ${eth}</div>
       <div className="dot_price">DOT - ${dot}</div>

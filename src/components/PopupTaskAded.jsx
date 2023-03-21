@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setPopups } from '../redux/slices/popupSlice';
 
 const PopupTaskAded = ({ popupClass, setPopupClass }) => {
-  const popup = useSelector((state) => state.reduxpopup.popup);
+  const theme = useSelector((state) => state.reduxtheme.theme);
   const popuptext = useSelector((state) => state.reduxpopup.popupredaxtext);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (popupClass === 'restart') {
@@ -22,7 +21,9 @@ const PopupTaskAded = ({ popupClass, setPopupClass }) => {
     // }, 5000);
   }, [popupClass]); //popupClass
 
-  return <div className={`popup ${popupClass}`}>{popuptext}</div>;
+  return (
+    <div className={theme ? `popup active ${popupClass}` : `popup  ${popupClass}`}>{popuptext}</div>
+  );
 };
 
 export default PopupTaskAded;

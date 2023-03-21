@@ -4,7 +4,7 @@ import Todolist from './Todolist';
 import CryptoPrice from './components/CryptoPrice';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPopups } from './redux/slices/popupSlice';
-
+import axios from 'axios';
 import {
   BrowserRouter as Router,
   Route,
@@ -15,7 +15,7 @@ import {
 } from 'react-router-dom';
 
 import tasksDbj from './tasksDbj.json';
-import axios from 'axios';
+
 // let tasksDb = [
 //   { id: 1, text: 'Take money', isDone: true, mode: 'add' },
 //   { id: 2, text: 'Read book', isDone: false, mode: 'add' },
